@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Produce</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <h2>🌾 Smart Farmer</h2>
+
+        <div>
+
+            <a href="/dashboard">
+                Dashboard
+            </a>
+
+            <a href="/logout">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            {% for category, message in messages %}
+
+                <div class="message {{ category }}">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+
+    <div class="dashboard-container">
+
+        <h1>🌾 My Produce</h1>
+
+        <a
+            href="{{ url_for('add_produce') }}"
+            class="dashboard-button">
+
+            + Add Produce
+
+        </a>
+
+
+        {% if produce_list %}
+
+            <div class="produce-list">
+
+                {% for produce in produce_list %}
+
+                    <div class="produce-card">
+
+                        <h2>
+                            {{ produce["produce_name"] }}
+                        </h2>
+
+                        <p>
+                            <strong>Quantity:</strong>
+
+                            {{ produce["quantity"] }}
+                            {{ produce["unit"] }}
+                        </p>
+
+                        {% if produce["expected_price"] is not none %}
+
+                            <p>
+                                <strong>
+                                    Expected Price:
+                                </strong>
+
+                                ₹{{ produce["expected_price"] }}
+                                / {{ produce["unit"] }}
+                            </p>
+
+                        {% endif %}
+
+
+                        {% if produce["booking_number"] %}
+
+                            <p>
+                                <strong>
+                                    Queue Number:
+                                </strong>
+
+                                {{ produce["booking_number"] }}
+                            </p>
+
+                        {% endif %}
+
+
+                        <p>
+
+                                <strong>Status:</strong>
+
+                                <span class="status submitted">
+                                    {{ produce["status"] }}
+                                </span>
+
+                            </p>
+
+
+                            <p>
+
+                                <strong>Payment Status:</strong>
+
+                                {% if produce["payment_status"] == "Paid" %}
+
+                                    <span class="status accepted">
+                                        Paid
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="status submitted">
+                                        Payment Pending
+                                    </span>
+
+                                {% endif %}
+
+                            </p>
+
+
+                        <p>
+                            <strong>Submitted:</strong>
+
+                            {{ produce["created_at"] }}
+                        </p>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="empty-message">
+
+                <h2>🌾 No Produce Submitted</h2>
+
+                <p>
+                    You haven't submitted any produce details yet.
+                </p>
+
+                <a
+                    href="{{ url_for('add_produce') }}"
+                    class="dashboard-button">
+
+                    Add Produce
+
+                </a>
+
+            </div>
+
+        {% endif %}
+
+
+        <p>
+
+            <a href="{{ url_for('dashboard') }}">
+                ← Back to Dashboard
+            </a>
+
+        </p>
+
+    </div>
+
+</body>
+
+</html>

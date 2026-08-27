@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <h2>🌾 Smart Farmer - Staff</h2>
+
+        <div>
+
+            <a href="/">
+                Home
+            </a>
+
+            <a href="/admin/logout">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <div class="dashboard-container">
+
+        <h1>
+            👨‍💼 Staff Dashboard
+        </h1>
+
+        <p>
+            Welcome, administrator.
+        </p>
+
+
+        <div class="admin-stats">
+
+
+            <div class="stat-card">
+
+                <h2>👨‍🌾</h2>
+
+                <h3>Registered Farmers</h3>
+
+                <strong>
+                    {{ farmer_count }}
+                </strong>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <h2>🎫</h2>
+
+                <h3>Total Bookings</h3>
+
+                <strong>
+                    {{ booking_count }}
+                </strong>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <h2>🌾</h2>
+
+                <h3>Produce Records</h3>
+
+                <strong>
+                    {{ produce_count }}
+                </strong>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <h2>📅</h2>
+
+                <h3>Procurement Slots</h3>
+
+                <strong>
+                    {{ slot_count }}
+                </strong>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="stats-grid">
+
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+            👨‍🌾
+        </div>
+
+        <div>
+
+            <h3>
+                Total Farmers
+            </h3>
+
+            <p class="stat-number">
+                {{ total_farmers }}
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+            🎫
+        </div>
+
+        <div>
+
+            <h3>
+                Total Bookings
+            </h3>
+
+            <p class="stat-number">
+                {{ total_bookings }}
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+            🌾
+        </div>
+
+        <div>
+
+            <h3>
+                Produce Submissions
+            </h3>
+
+            <p class="stat-number">
+                {{ total_produce }}
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+            📅
+        </div>
+
+        <div>
+
+            <h3>
+                Open Slots
+            </h3>
+
+            <p class="stat-number">
+                {{ open_slots }}
+            </p>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+<div class="stat-card">
+
+    <div class="stat-icon">
+        💰
+    </div>
+
+    <div>
+
+        <h3>
+            Payments
+        </h3>
+
+        <p>
+            Pending: {{ pending_payments }}
+        </p>
+
+        <p>
+            Paid: {{ paid_payments }}
+        </p>
+
+    </div>
+
+</div>
+
+<div class="quantity-summary">
+
+    <h3>
+        📦 Total Produce Quantity Submitted
+    </h3>
+
+    <p>
+        {{ "%.2f"|format(total_quantity) }}
+    </p>
+
+</div>
+
+
+        <div class="dashboard-card">
+
+            <h2>👨‍🌾</h2>
+
+            <h3>Manage Farmers</h3>
+
+            <p>
+                View registered farmer information.
+            </p>
+
+            <a
+                href="{{ url_for('admin_farmers') }}"
+                class="dashboard-button">
+
+                View Farmers
+
+            </a>
+        </div>
+
+        <div class="dashboard-card">
+
+            <h2>📅</h2>
+    
+            <h3>Manage Slots</h3>
+
+            <p>
+                Create and manage procurement slots.
+            </p>
+
+            <a
+                href="{{ url_for('admin_slots') }}"
+                class="dashboard-button">
+
+                Manage Slots
+
+            </a>
+
+        </div>
+
+
+        <div class="dashboard-card">
+
+            <h2>🎫</h2>
+
+            <h3>Manage Queue</h3>
+
+            <p>
+                View farmer bookings and queue numbers.
+            </p>
+
+            <a
+                href="{{ url_for('admin_bookings') }}"
+                class="dashboard-button">
+
+                View Bookings
+
+            </a>
+
+        </div>
+
+        <div class="dashboard-card">
+
+              <h2>🌾</h2>
+
+            <h3>Manage Produce</h3>
+
+            <p>
+                View farmer produce submissions.
+            </p>
+
+            <a
+                href="{{ url_for('admin_produce') }}"
+                class="dashboard-button">
+
+                View Produce
+
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

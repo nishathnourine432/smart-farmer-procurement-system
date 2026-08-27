@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Farmers</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <h2>🌾 Smart Farmer - Staff</h2>
+
+        <div>
+
+            <a href="{{ url_for('admin_dashboard') }}">
+                Dashboard
+            </a>
+
+            <a href="{{ url_for('admin_logout') }}">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            {% for category, message in messages %}
+
+                <div class="message {{ category }}">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+
+    <div class="admin-page-container">
+
+        <div class="page-header">
+
+            <div>
+
+                <h1>👨‍🌾 Registered Farmers</h1>
+
+                <p>
+                    View all farmers registered in the system.
+                </p>
+
+            </div>
+
+            <div>
+
+                <strong>
+                    Total Farmers:
+                    {{ farmers|length }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        {% if farmers %}
+
+            <div class="table-container">
+
+                <table class="data-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Farmer ID</th>
+
+                            <th>Name</th>
+
+                            <th>Phone</th>
+
+                            <th>Email</th>
+
+                            <th>Address</th>
+
+                            <th>Registered On</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for farmer in farmers %}
+
+                            <tr>
+
+                                <td>
+                                    <strong>
+                                        {{ farmer["farmer_id"] }}
+                                    </strong>
+                                </td>
+
+                                <td>
+                                    {{ farmer["name"] }}
+                                </td>
+
+                                <td>
+                                    {{ farmer["phone"] }}
+                                </td>
+
+                                <td>
+
+                                    {% if farmer["email"] %}
+
+                                        {{ farmer["email"] }}
+
+                                    {% else %}
+
+                                        <span class="not-provided">
+                                            Not provided
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+                                <td>
+                                    {{ farmer["address"] }}
+                                </td>
+
+                                <td>
+                                    {{ farmer["created_at"] }}
+                                </td>
+
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        {% else %}
+
+            <div class="empty-message">
+
+                <h2>👨‍🌾 No Farmers Registered</h2>
+
+                <p>
+                    There are currently no registered farmers.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+
+        <p>
+
+            <a href="{{ url_for('admin_dashboard') }}">
+                ← Back to Staff Dashboard
+            </a>
+
+        </p>
+
+    </div>
+
+</body>
+
+</html>

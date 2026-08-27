@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Add Produce</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <h2>🌾 Smart Farmer</h2>
+
+        <div>
+
+            <a href="/dashboard">
+                Dashboard
+            </a>
+
+            <a href="/logout">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            {% for category, message in messages %}
+
+                <div class="message {{ category }}">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+
+    <div class="form-container">
+
+        <h1>🌾 Add Produce</h1>
+
+        <p>
+            Enter the produce you plan to bring.
+        </p>
+
+
+        {% if bookings %}
+
+        <form method="POST"
+              action="{{ url_for('add_produce') }}">
+
+
+            <div class="form-group">
+
+                <label for="booking_id">
+                    Procurement Booking
+                </label>
+
+                <select
+                    id="booking_id"
+                    name="booking_id"
+                    required>
+
+                    <option value="">
+                        -- Select Booking --
+                    </option>
+
+                    {% for booking in bookings %}
+
+                        <option value="{{ booking['id'] }}">
+
+                            Queue #{{ booking['booking_number'] }}
+
+                            -
+                            {{ booking['slot_date'] }}
+
+                            -
+                            {{ booking['slot_time'] }}
+
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="produce_name">
+                    Produce Name
+                </label>
+
+                <input
+                    type="text"
+                    id="produce_name"
+                    name="produce_name"
+                    placeholder="e.g. Rice, Wheat, Tomato"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="quantity">
+                    Quantity
+                </label>
+
+                <input
+                    type="number"
+                    id="quantity"
+                    name="quantity"
+                    step="0.01"
+                    min="0.01"
+                    placeholder="Enter quantity"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="unit">
+                    Unit
+                </label>
+
+                <select
+                    id="unit"
+                    name="unit"
+                    required>
+
+                    <option value="">
+                        -- Select Unit --
+                    </option>
+
+                    <option value="kg">
+                        Kilogram (kg)
+                    </option>
+
+                    <option value="quintal">
+                        Quintal
+                    </option>
+
+                    <option value="ton">
+                        Ton
+                    </option>
+
+                    <option value="bags">
+                        Bags
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="expected_price">
+                    Expected Price per Unit (Optional)
+                </label>
+
+                <input
+                    type="number"
+                    id="expected_price"
+                    name="expected_price"
+                    step="0.01"
+                    min="0"
+                    placeholder="Enter expected price">
+
+            </div>
+
+
+            <button type="submit">
+                Submit Produce
+            </button>
+
+        </form>
+
+        {% else %}
+
+            <div class="empty-message">
+
+                <h2>📅 No Active Booking</h2>
+
+                <p>
+                    Please book a procurement slot before
+                    submitting your produce.
+                </p>
+
+                <a
+                    href="{{ url_for('book_slot') }}"
+                    class="dashboard-button">
+
+                    Book Procurement Slot
+
+                </a>
+
+            </div>
+
+        {% endif %}
+
+
+        <p>
+
+            <a href="{{ url_for('dashboard') }}">
+                ← Back to Dashboard
+            </a>
+
+        </p>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Procurement Slots</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+
+<body>
+
+
+    <nav class="navbar">
+
+        <h2>🌾 Smart Farmer - Staff</h2>
+
+        <div>
+
+            <a href="{{ url_for('admin_dashboard') }}">
+                Dashboard
+            </a>
+
+            <a href="{{ url_for('admin_logout') }}">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            {% for category, message in messages %}
+
+                <div class="message {{ category }}">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+
+
+    <div class="admin-page-container">
+
+
+        <div class="page-header">
+
+            <div>
+
+                <h1>📅 Manage Procurement Slots</h1>
+
+                <p>
+                    Create and manage farmer procurement slots.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- CREATE SLOT -->
+
+        <div class="admin-form-card">
+
+            <h2>
+                ➕ Create New Procurement Slot
+            </h2>
+
+
+            <form
+                method="POST"
+                action="{{ url_for('admin_slots') }}">
+
+
+                <div class="slot-form-grid">
+
+
+                    <div class="form-group">
+
+                        <label for="slot_date">
+                            Date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="slot_date"
+                            name="slot_date"
+                            required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="slot_time">
+                            Time
+                        </label>
+
+                        <input
+                            type="time"
+                            id="slot_time"
+                            name="slot_time"
+                            required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="capacity">
+                            Farmer Capacity
+                        </label>
+
+                        <input
+                            type="number"
+                            id="capacity"
+                            name="capacity"
+                            min="1"
+                            placeholder="e.g. 25"
+                            required>
+
+                    </div>
+
+
+                </div>
+
+
+                <button type="submit">
+                    Create Procurement Slot
+                </button>
+
+
+            </form>
+
+        </div>
+
+
+
+        <!-- EXISTING SLOTS -->
+
+        <div class="admin-form-card">
+
+            <h2>
+                📋 Existing Procurement Slots
+            </h2>
+
+
+            {% if slots %}
+
+
+                <div class="table-container">
+
+                    <table class="data-table">
+
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Date</th>
+
+                                <th>Time</th>
+
+                                <th>Capacity</th>
+
+                                <th>Booked</th>
+
+                                <th>Available</th>
+
+                                <th>Status</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+
+                            {% for slot in slots %}
+
+                                <tr>
+
+
+                                    <td>
+                                        {{ slot["slot_date"] }}
+                                    </td>
+
+
+                                    <td>
+                                        {{ slot["slot_time"] }}
+                                    </td>
+
+
+                                    <td>
+                                        {{ slot["capacity"] }}
+                                    </td>
+
+
+                                    <td>
+                                        {{ slot["booked_count"] }}
+                                    </td>
+
+
+                                    <td>
+                                        {{ slot["capacity"] - slot["booked_count"] }}
+                                    </td>
+
+
+                                    <td>
+
+
+                                        {% if slot["booked_count"] >= slot["capacity"] %}
+
+                                            <span class="slot-full">
+                                                Full
+                                            </span>
+
+                                        {% else %}
+
+                                            <span class="slot-open">
+                                                Open
+                                            </span>
+
+                                        {% endif %}
+
+
+                                    </td>
+
+
+                                </tr>
+
+                            {% endfor %}
+
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+            {% else %}
+
+
+                <div class="empty-message">
+
+                    <h2>
+                        📅 No Procurement Slots
+                    </h2>
+
+                    <p>
+                        Create your first procurement slot above.
+                    </p>
+
+                </div>
+
+
+            {% endif %}
+
+
+        </div>
+
+
+        <p>
+
+            <a href="{{ url_for('admin_dashboard') }}">
+                ← Back to Staff Dashboard
+            </a>
+
+        </p>
+
+
+    </div>
+
+
+</body>
+
+</html>

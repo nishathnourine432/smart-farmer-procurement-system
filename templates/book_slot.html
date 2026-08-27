@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Book Procurement Slot</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+
+    <nav class="navbar">
+
+        <h2>🌾 Smart Farmer</h2>
+
+        <div>
+
+            <a href="/dashboard">
+                Dashboard
+            </a>
+
+            <a href="/logout">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            {% for category, message in messages %}
+
+                <div class="message {{ category }}">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+
+    <div class="form-container">
+
+        <h1>Book Procurement Slot</h1>
+
+        <p>
+            Select a convenient date and time.
+        </p>
+
+
+        <form method="POST"
+              action="{{ url_for('book_slot') }}">
+
+
+            <div class="form-group">
+
+                <label for="slot_id">
+                    Available Slot
+                </label>
+
+
+                <select
+                    id="slot_id"
+                    name="slot_id"
+                    required>
+
+                    <option value="">
+                        -- Select a slot --
+                    </option>
+
+
+                    {% for slot in slots %}
+
+                        <option value="{{ slot['id'] }}">
+
+                            {{ slot['slot_date'] }}
+                            -
+                            {{ slot['slot_time'] }}
+
+                            ({{ slot['capacity'] - slot['booked_count'] }}
+                            spaces available)
+
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <button type="submit">
+                Confirm Booking
+            </button>
+
+        </form>
+
+
+        <p>
+            <a href="{{ url_for('dashboard') }}">
+                ← Back to Dashboard
+            </a>
+        </p>
+
+    </div>
+
+
+</body>
+
+</html>

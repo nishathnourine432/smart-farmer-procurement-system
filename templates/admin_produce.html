@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Produce</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+
+<body>
+
+
+    <nav class="navbar">
+
+        <h2>🌾 Smart Farmer - Staff</h2>
+
+        <div>
+
+            <a href="{{ url_for('admin_dashboard') }}">
+                Dashboard
+            </a>
+
+            <a href="{{ url_for('admin_logout') }}">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            {% for category, message in messages %}
+
+                <div class="message {{ category }}">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+
+    <div class="admin-page-container">
+
+
+        <div class="page-header">
+
+            <div>
+
+                <h1>🌾 Submitted Produce</h1>
+
+                <p>
+                    View and manage farmer produce submissions.
+                </p>
+
+            </div>
+
+
+            <div>
+
+                <strong>
+                    Total Submissions:
+                    {{ produce|length }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        {% if produce %}
+
+
+            <div class="table-container">
+
+                <table class="data-table">
+
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Farmer ID</th>
+
+                            <th>Farmer Name</th>
+
+                            <th>Phone</th>
+
+                            <th>Produce</th>
+
+                            <th>Quantity</th>
+
+                            <th>Expected Price</th>
+
+                            <th>Status</th>
+
+                            <th>Payment</th>
+
+                            <th>Action</th>
+
+                            <th>Submitted On</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                        {% for item in produce %}
+
+                            <tr>
+
+
+                                <td>
+                                    <strong>
+                                        {{ item["farmer_id"] }}
+                                    </strong>
+                                </td>
+
+
+                                <td>
+                                    {{ item["name"] }}
+                                </td>
+
+
+                                <td>
+                                    {{ item["phone"] }}
+                                </td>
+
+
+                                <td>
+                                    {{ item["produce_name"] }}
+                                </td>
+
+
+                                <td>
+                                    {{ item["quantity"] }}
+                                    {{ item["unit"] }}
+                                </td>
+
+
+                                <td>
+
+                                    {% if item["expected_price"] is not none %}
+
+                                        ₹{{ "%.2f"|format(item["expected_price"]) }}
+
+                                    {% else %}
+
+                                        <span class="not-provided">
+                                            Not provided
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+
+                                <td>
+
+                                    {% if item["status"] == "Submitted" %}
+
+                                        <span class="produce-status submitted">
+                                            Submitted
+                                        </span>
+
+                                    {% elif item["status"] == "Accepted" %}
+
+                                        <span class="produce-status accepted">
+                                            Accepted
+                                        </span>
+
+                                    {% elif item["status"] == "Rejected" %}
+
+                                        <span class="produce-status rejected">
+                                            Rejected
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="produce-status">
+                                            {{ item["status"] }}
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+
+                                <td>
+
+                                    {% if item["payment_status"] == "Paid" %}
+
+                                        <span class="produce-status accepted">
+                                            Paid
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="produce-status submitted">
+                                            Pending
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+
+                                <td>
+
+                                    {% if item["status"] == "Submitted" %}
+
+                                        <form
+                                            method="POST"
+                                            action="{{ url_for(
+                                                'update_produce_status',
+                                                produce_id=item['id']
+                                            ) }}"
+                                            style="display:inline;">
+
+                                            <input
+                                                type="hidden"
+                                                name="status"
+                                                value="Accepted">
+
+                                            <button
+                                                type="submit"
+                                                class="action-button">
+
+                                                Accept
+
+                                            </button>
+
+                                        </form>
+
+
+                                        <form
+                                            method="POST"
+                                            action="{{ url_for(
+                                                'update_produce_status',
+                                                produce_id=item['id']
+                                            ) }}"
+                                            style="display:inline;">
+
+                                            <input
+                                                type="hidden"
+                                                name="status"
+                                                value="Rejected">
+
+                                            <button
+                                                type="submit"
+                                                class="action-button">
+
+                                                Reject
+
+                                            </button>
+
+                                        </form>
+
+
+                                    {% elif item["status"] == "Accepted"
+                                        and item["payment_status"] != "Paid" %}
+
+                                        <form
+                                            method="POST"
+                                            action="{{ url_for(
+                                                'update_payment_status',
+                                                produce_id=item['id']
+                                            ) }}"
+                                            style="display:inline;">
+
+                                            <button
+                                                type="submit"
+                                                class="action-button">
+
+                                                Mark as Paid
+
+                                            </button>
+
+                                        </form>
+
+
+                                    {% elif item["payment_status"] == "Paid" %}
+
+                                        <span>
+                                            Payment Completed
+                                        </span>
+
+
+                                    {% else %}
+
+                                        <span>
+                                            Processed
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+
+                            </tr>
+
+                        {% endfor %}
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+        {% else %}
+
+
+            <div class="empty-message">
+
+                <h2>🌾 No Produce Submitted</h2>
+
+                <p>
+                    No farmers have submitted produce yet.
+                </p>
+
+            </div>
+
+
+        {% endif %}
+
+
+        <p>
+
+            <a href="{{ url_for('admin_dashboard') }}">
+                ← Back to Staff Dashboard
+            </a>
+
+        </p>
+
+
+    </div>
+
+
+</body>
+
+</html>

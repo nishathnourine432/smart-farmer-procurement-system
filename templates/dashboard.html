@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Farmer Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <h2>🌾 Smart Farmer</h2>
+
+        <div>
+            <a href="/">Home</a>
+            <a href="/logout">Logout</a>
+        </div>
+
+    </nav>
+
+
+    <div class="dashboard-container">
+
+        <h1>
+            Welcome, {{ farmer_name }}! 👨‍🌾
+        </h1>
+
+        <p>
+            Farmer ID: <strong>{{ farmer_id }}</strong>
+        </p>
+
+
+        <div class="dashboard-card">
+
+             <h2>📅</h2>
+
+            <h3>Book Procurement Slot</h3>
+
+            <p>
+                Select a convenient date and time
+                for agricultural produce procurement.
+            </p>
+
+            <a href="{{ url_for('book_slot') }}"
+            class="dashboard-button">
+
+                Book Slot
+
+            </a>
+        </div>
+
+        <div class="dashboard-card">
+
+                <h2>🎫</h2>
+
+                <h3>My Queue</h3>
+
+                <p>
+                    View your current procurement queue
+                    position.
+                </p>
+
+                <a
+                    href="{{ url_for('my_queue') }}"
+                    class="dashboard-button">
+
+                    View My Queue
+
+                </a>
+
+        </div>
+
+
+        <div class="dashboard-card">
+
+                <h2>🌾</h2>
+
+                <h3>My Produce</h3>
+
+                <p>
+                    View and manage your submitted
+                    agricultural produce.
+                </p>
+
+                <a
+                    href="{{ url_for('my_produce') }}"
+                    class="dashboard-button">
+
+                    View My Produce
+
+                </a>
+
+        </div>
+
+
+        <div class="payment-status-card">
+
+                <h2>💰 Payment Status</h2>
+
+                <p>
+                    Check the status of your procurement payments.
+                </p>
+
+                <p>
+                    <strong>Pending Payments:</strong>
+                    {{ pending_payments }}
+                </p>
+
+                <p>
+                    <strong>Paid Payments:</strong>
+                    {{ paid_payments }}
+                </p>
+
+                <a
+                    href="{{ url_for('my_produce') }}"
+                    class="dashboard-button">
+
+                     View Payment Details
+
+                </a>
+
+        </div>
+    </div>
+        
+
+    </div>
+
+</body>
+
+</html>

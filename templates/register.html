@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Farmer Registration</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+    {% if messages %}
+
+        {% for category, message in messages %}
+
+            <div class="message {{ category }}">
+                {{ message }}
+            </div>
+
+        {% endfor %}
+
+    {% endif %}
+
+{% endwith %}
+
+    <nav class="navbar">
+
+        <h2>🌾 Smart Farmer</h2>
+
+        <div>
+            <a href="/">Home</a>
+        </div>
+
+    </nav>
+
+
+    <div class="container">
+
+        <h1>Farmer Registration</h1>
+
+        <p>
+            Register to access agricultural procurement services.
+        </p>
+
+
+        <form method="POST">
+
+            <div class="form-group">
+
+                <label for="name">
+                    Full Name
+                </label>
+
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Enter your full name"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="phone">
+                    Phone Number
+                </label>
+
+                <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    placeholder="Enter your phone number"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="email">
+                    Email (Optional)
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter email address (optional)">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="address">
+                    Address
+                </label>
+
+                <textarea
+                    id="address"
+                    name="address"
+                    placeholder="Enter your address"></textarea>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="farmer_id">
+                    Farmer ID
+                </label>
+
+                <input
+                    type="text"
+                    id="farmer_id"
+                    name="farmer_id"
+                    placeholder="Enter your Farmer ID"
+                    required>
+
+            </div>
+
+            <div class="form-group">
+
+               <label for="password">
+                   Password
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Create a password"
+                    required>
+
+            </div>
+
+            <div class="form-group">
+
+               <label for="confirm_password">
+                    Confirm Password
+            </label>
+
+            <input
+                    type="password"
+                    id="confirm_password"
+                    name="confirm_password"
+                    placeholder="Confirm your password"
+                    required>
+
+            </div>
+
+
+            <button type="submit" class="btn">
+                Register
+            </button>
+
+        </form>
+
+
+        <a href="/" class="back-link">
+            ← Back to Home
+        </a>
+
+    </div>
+
+</body>
+
+</html>

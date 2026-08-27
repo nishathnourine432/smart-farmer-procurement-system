@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Queue</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <h2>🌾 Smart Farmer</h2>
+
+        <div>
+
+            <a href="/dashboard">
+                Dashboard
+            </a>
+
+            <a href="/logout">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            {% for category, message in messages %}
+
+                <div class="message {{ category }}">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+
+    <div class="dashboard-container">
+
+        <h1>🎫 My Queue</h1>
+
+        <p>
+            View your procurement bookings and queue numbers.
+        </p>
+
+
+        {% if bookings %}
+
+            <div class="queue-list">
+
+                {% for booking in bookings %}
+
+                    <div class="queue-card">
+
+                        <div class="queue-number">
+
+                            <span>
+                                Queue Number
+                            </span>
+
+                            <strong>
+                                {{ booking["booking_number"] }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="queue-details">
+
+                            <p>
+                                <strong>Date:</strong>
+
+                                {{ booking["slot_date"] }}
+                            </p>
+
+
+                            <p>
+                                <strong>Time:</strong>
+
+                                {{ booking["slot_time"] }}
+                            </p>
+
+
+                            <p>
+                                <strong>Status:</strong>
+
+                                <span class="status
+                                {{ booking['status']|lower }}">
+
+                                    {{ booking["status"] }}
+
+                                </span>
+
+                            </p>
+
+
+                            <p>
+                                <strong>Booking Created:</strong>
+
+                                {{ booking["created_at"] }}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="empty-message">
+
+                <h2>📭 No bookings yet</h2>
+
+                <p>
+                    You haven't booked a procurement slot yet.
+                </p>
+
+                <a
+                    href="{{ url_for('book_slot') }}"
+                    class="dashboard-button">
+
+                    Book a Slot
+
+                </a>
+
+            </div>
+
+        {% endif %}
+
+
+        <p>
+
+            <a href="{{ url_for('dashboard') }}">
+                ← Back to Dashboard
+            </a>
+
+        </p>
+
+    </div>
+
+</body>
+
+</html>

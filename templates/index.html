@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Smart Farmer Procurement System</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+
+    {% if messages %}
+
+        {% for category, message in messages %}
+
+            {% if category == "success" %}
+
+                <div class="message success">
+                    {{ message }}
+                </div>
+
+            {% endif %}
+
+        {% endfor %}
+
+    {% endif %}
+
+{% endwith %}
+
+
+<body>
+
+
+    <nav class="navbar">
+
+        <h2>🌾 Smart Farmer</h2>
+
+        <div>
+            <a href="/">Home</a>
+            <a href="/register">Register</a>
+            <a href="/login">Login</a>
+        </div>
+
+    </nav>
+
+    
+
+    <div class="container">
+
+        <h1>
+            Smart Farmer Procurement System
+        </h1>
+
+        <p>
+            A digital platform for efficient,
+            transparent and hassle-free agricultural
+            procurement.
+        </p>
+
+
+        <h2 style="margin-bottom: 20px;">
+            Our Services
+        </h2>
+
+
+        <ul style="line-height: 2; margin-bottom: 25px;">
+
+            <li>👨‍🌾 Farmer Registration</li>
+
+            <li>📅 Procurement Slot Booking</li>
+
+            <li>🎫 Queue Management</li>
+
+            <li>🌾 Procurement Status Tracking</li>
+
+            <li>💰 Payment Status Tracking</li>
+
+            <li>🔔 Notifications</li>
+
+        </ul>
+
+
+        <a href="/register"
+           style="text-decoration: none;">
+
+            <button class="btn">
+                Register as a Farmer
+            </button>
+
+        </a>
+
+    </div>
+
+
+</body>
+
+</html>

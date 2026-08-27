@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Bookings</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+
+<body>
+
+
+    <nav class="navbar">
+
+        <h2>🌾 Smart Farmer - Staff</h2>
+
+        <div>
+
+            <a href="{{ url_for('admin_dashboard') }}">
+                Dashboard
+            </a>
+
+            <a href="{{ url_for('admin_logout') }}">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            {% for category, message in messages %}
+
+                <div class="message {{ category }}">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+
+    <div class="admin-page-container">
+
+
+        <div class="page-header">
+
+            <div>
+
+                <h1>🎫 Farmer Bookings</h1>
+
+                <p>
+                    View procurement bookings and queue numbers.
+                </p>
+
+            </div>
+
+
+            <div>
+
+                <strong>
+                    Total Bookings:
+                    {{ bookings|length }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        {% if bookings %}
+
+
+            <div class="table-container">
+
+                <table class="data-table">
+
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Queue</th>
+
+                            <th>Farmer ID</th>
+
+                            <th>Farmer Name</th>
+
+                            <th>Phone</th>
+
+                            <th>Date</th>
+
+                            <th>Time</th>
+
+                            <th>Status</th>
+
+                            <th>Booked On</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                        {% for booking in bookings %}
+
+                            <tr>
+
+                                <td>
+
+                                    <strong>
+                                        #{{ booking["booking_number"] }}
+                                    </strong>
+
+                                </td>
+
+
+                                <td>
+                                    {{ booking["farmer_id"] }}
+                                </td>
+
+
+                                <td>
+                                    {{ booking["name"] }}
+                                </td>
+
+
+                                <td>
+                                    {{ booking["phone"] }}
+                                </td>
+
+
+                                <td>
+                                    {{ booking["slot_date"] }}
+                                </td>
+
+
+                                <td>
+                                    {{ booking["slot_time"] }}
+                                </td>
+
+
+                                <td>
+
+                                    <span class="booking-status">
+
+                                        {{ booking["status"] }}
+
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+                                    {{ booking["created_at"] }}
+                                </td>
+
+
+                            </tr>
+
+                        {% endfor %}
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+        {% else %}
+
+
+            <div class="empty-message">
+
+                <h2>🎫 No Bookings</h2>
+
+                <p>
+                    No farmers have booked procurement slots yet.
+                </p>
+
+            </div>
+
+
+        {% endif %}
+
+
+        <p>
+
+            <a href="{{ url_for('admin_dashboard') }}">
+                ← Back to Staff Dashboard
+            </a>
+
+        </p>
+
+
+    </div>
+
+
+</body>
+
+</html>
