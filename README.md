@@ -21,6 +21,14 @@ The system is built using **Flask and SQLite**, making it lightweight and suitab
 
 ---
 
+# 🌾 Smart Farmer Procurement System
+
+A web-based application for efficient and transparent agricultural procurement.
+
+## 🚀 Live Demo
+
+🌐 **Live Website:** https://smart-farmer-procurement-system-1.onrender.com
+
 ## ✨ Features
 
 ### 👨‍🌾 Farmer Features
